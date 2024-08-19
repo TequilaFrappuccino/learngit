@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录页面</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #003D99; /* 蓝色背景 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white; /* 字体颜色设置为白色 */
+        }
+
+        .login-container {
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .logo img {
+            width: 80px; /* 根据你提供的图片调整大小 */
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: white; /* 标签文字颜色设置为白色 */
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #0044cc; /* 输入框背景设置为深蓝色 */
+            color: white; /* 输入框文字颜色设置为白色 */
+            box-sizing: border-box;
+        }
+
+        input[type="text"]::placeholder,
+        input[type="password"]::placeholder {
+            color: #b3c7e6; /* 占位符文字颜色设置为浅蓝色 */
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #004099;
+        }
+
+        .forgot-password {
+            display: block;
+            margin-top: 15px;
+            color: #b3c7e6;
+            text-decoration: none;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            color: #ffcccb; /* 错误信息颜色 */
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('loginForm').addEventListener('submit', function(event) {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                let errorMessage = '';
+
+                // 用户名验证：6-14个字符
+                if (username.length < 6 || username.length > 14) {
+                    errorMessage += '用户名必须是6到14个字符长。\n';
+                }
+
+                // 密码验证：必须包含大写字母、小写字母和数字
+                const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/;
+                if (!passwordRegex.test(password)) {
+                    errorMessage += '密码必须包含大写字母、小写字母和数字，且至少6个字符长。\n';
+                }
+
+                // 如果存在错误信息，则阻止表单提交并显示错误信息
+                if (errorMessage) {
+                    event.preventDefault(); // 阻止表单提交
+                    document.getElementById('error').innerText = errorMessage;
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+        </div>
+        <form id="loginForm" action="dashboard.html" method="post">
+            <div class="form-group">
+                <label for="username">用户名：</label>
+                <input type="text" id="username" name="username" required placeholder="USERNAME">
+            </div>
+            <div class="form-group">
+                <label for="password">密码：</label>
+                <input type="password" id="password" name="password" required placeholder="PASSWORD">
+            </div>
+            <button type="submit">登录</button>
+            <p id="error" class="error-message"></p>
+        </form>
+        <a href="#" class="forgot-password">忘记密码？</a>
+    </div>
+</body>
+</html>
